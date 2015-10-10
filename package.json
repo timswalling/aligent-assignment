@@ -1,0 +1,12 @@
+{
+  "name": "aligent-assignment",
+  "version": "0.0.0",
+  "description": "Front-end web development assignment from Aligent Consulting",
+  "readme": "README.md",
+  "author": "Tim Swalling <tim@timswalling.com>",
+  "private": true,
+  "repository": "timswalling/aligent-challenge",
+  "dependencies": {},
+  "devDependencies": {},
+  "license": "CC-BY-4.0"
+}
