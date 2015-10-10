@@ -64,16 +64,10 @@
 
 /* = Resets etc. = */
 
-/* == inuitcss == */
-
 @import "inuit-box-sizing/_generic.box-sizing.scss";
 @import "inuit-normalize/_generic.normalize.scss";
 @import "inuit-reset/_generic.reset.scss";
 @import "inuit-shared/_generic.shared.scss";
-
-
-/* == Site == */
-
 @import "_generic.forms.scss";
 @import "_generic.iframe.scss";
 
@@ -82,11 +76,6 @@
 
 
 /* = Base styling = */
-
-/* == inuitcss == */
-
-
-/* == Site == */
 
 @import "_base.fonts.scss";
 @import "_base.headings.scss";
@@ -99,14 +88,8 @@
 
 /* = Objects = */
 
-/* == inuitcss == */
-
 @import "inuit-box/_objects.box.scss";
 @import "inuit-layout/_objects.layout.scss";
-
-
-/* == Shared == */
-
 @import "_objects.delimited.scss";
 @import "_objects.wrapper.scss";
 
@@ -116,19 +99,13 @@
 
 /* = Components = */
 
-/* == Shared == */
+
 
 
 
 /* = Overrides, etc. = */
 
-/* == inuitcss == */
-
 @import "inuit-clearfix/_trumps.clearfix.scss";
 @import "inuit-widths/_trumps.widths.scss";
 @import "inuit-responsive-widths/_trumps.widths-responsive.scss";
-
-
-/* == Shared == */
-
 @import "_trumps.display-helpers.scss";
