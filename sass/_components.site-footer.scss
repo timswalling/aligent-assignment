@@ -1,0 +1,56 @@
+/*------------------------------------*\
+    #SITE-FOOTER
+\*------------------------------------*/
+
+/*footer*/.#{$aligent-namespace}site-footer {
+    font-size: (14px / $aligent-font-size-base) * 100%;
+    padding: 2 * $aligent-spacing-unit-base $aligent-spacing-unit-base;
+    text-align: center;
+}
+
+
+    /*ul*/.#{$aligent-namespace}site-footer__list {
+        @extend %#{$inuit-list-bare-namespace}list-bare;
+
+        /**
+         * 1. Add a bottom margin to each item...
+         *
+         * 2. ... unless it's the last one
+         *
+         * 3. Change the display and remove margins on larger devices for a
+         *    horizontal list
+         *
+         * 4. Add list separators
+         **/
+
+        & > li {
+            margin-bottom: $aligent-spacing-unit-base;    /* [1] */
+
+            @include media-query(large-and-up) {
+                display: inline-block;    /* [3] */
+                margin-bottom: 0;         /* [3] */
+
+                & + li:before {    /* [4] */
+                    content: "\2012";
+                    display: inline-block;
+                    margin: 0 2 * $aligent-spacing-unit-base;
+                }
+            }
+
+        }
+
+        & > :last-child {
+            margin-bottom: 0;    /* [2] */
+        }
+
+    }
+
+        /*a*/.#{$aligent-namespace}site-footer__link {
+            color: $aligent-color-text-base;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+        }
