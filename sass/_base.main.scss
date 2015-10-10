@@ -1,0 +1,21 @@
+/*------------------------------------*\
+    #MAIN
+\*------------------------------------*/
+
+/**
+ * Set a background colour and minimum height on the main element.
+ */
+
+$aligent-main-color-background: null !default;
+
+$aligent-main-min-height: 480px !default;
+
+
+main {
+    @if $aligent-main-color-background != null {
+        background-color: $aligent-main-color-background;
+    }
+    @if $aligent-main-min-height != null {
+        min-height: $aligent-main-min-height;
+    }
+}

@@ -1,0 +1,40 @@
+/*------------------------------------*\
+    #JUSTIFY
+\*------------------------------------*/
+
+/**
+ * Equally space items in the available space.
+ */
+
+/**
+ * 1. Set the contents to justify.
+ *
+ * 2. Set child elements to display as inline block.
+ *
+ * 3. Add a pseudo element that is always displayed on a new line in order to 
+ *    trigger the justification. (Support for text-align-last is patchy.)
+ *
+ * 4. Optionally compensate for the additional height created by the pseudo
+ *    element.
+ */ 
+
+.#{$aligent-namespace}justify,
+%#{$aligent-namespace}justify {
+    text-align: justify;    /* [1] */
+    
+    > * {
+        display: inline-block;   /* [2] */
+    }
+    
+    &:after {   /* [3] */
+        content: '';
+        display: inline-block;
+        width: 100%;
+    }
+
+}
+
+.#{$aligent-namespace}justify--height-adjust,
+%#{$aligent-namespace}justify--height-adjust {
+    margin-bottom: -$aligent-spacing-unit-base; /* [4] */
+}

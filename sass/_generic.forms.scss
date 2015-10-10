@@ -1,0 +1,13 @@
+/*------------------------------------*\
+    #FORM
+\*------------------------------------*/
+
+/**
+ * Form resets.
+ */
+
+// Make sure a text area can only be resized vertically.
+
+textarea {
+    resize: vertical;
+}

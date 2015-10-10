@@ -1,0 +1,25 @@
+/*------------------------------------*\
+    #DELIMITED
+\*------------------------------------*/
+
+/**
+ * Add delimiters between consecutive items.
+ */
+
+$aligent-delimiters:  null !default;
+
+
+.#{$aligent-namespace}delimited {
+    display:    inline;
+}
+
+
+// Variations
+
+@each $type, $content in  $aligent-delimiters {
+
+    .#{$aligent-namespace}delimited--#{$type} + .#{$aligent-namespace}delimited:before {
+        content: $content;
+    }
+
+}

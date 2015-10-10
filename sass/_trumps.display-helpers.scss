@@ -1,0 +1,141 @@
+/*------------------------------------*\
+    #DISPLAY HELPERS
+\*------------------------------------*/
+
+/**
+ * Prevent display, both visually and from screen-readers.
+ *
+ * Some screen readers will still access elements that have "display: none".
+ * Using "display: none" AND "visibility: hidden" avoids this problem. More
+ * information at: http://juicystudio.com/article/screen-readers-display-none.php
+ * Hat tip: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css
+ **/
+
+$aligent-enable-display-helpers-responsive: false !default; // Generate mobile-first helper classes
+
+.#{$aligent-namespace}u-hidden,
+%#{$aligent-namespace}u-hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+
+// Generate mobile-first helper classes to display hidden elements.
+
+@if $aligent-enable-display-helpers-responsive == true {
+
+    @each $breakpoint in $breakpoints {
+
+        $alias: nth($breakpoint, 1);
+
+        @if ($alias != "retina") {
+
+            @include media-query($alias) {
+
+                .#{$aligent-namespace}u-hidden-#{$alias} {
+                    display: none !important;
+                    visibility: hidden !important;
+                }
+
+                .#{$aligent-namespace}u-display-block-#{$alias} {
+                    display: block !important;
+                    visibility: visible !important;
+                }
+
+
+                .#{$aligent-namespace}u-display-inline-block-#{$alias} {
+                    display: inline-block !important;
+                    visibility: visible !important;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/*
+ * Hide visually, but have it available for screen readers: * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ * Hat tip: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css
+ */
+
+.#{$aligent-namespace}u-visually-hidden,
+%#{$aligent-namespace}u-visually-hidden {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+}
+
+
+
+
+
+ /**
+ * Selectively display or hide content depending on the browser's capabilities.
+ * Requires Modernizr.
+ *
+ * Note: in order for these classes to work properly when JavaScript is
+ * disabled, the html element must include the exclusion classes (eg "no-*")
+ * used below. These must be removed using JavaScript prior to running Modernizr
+*  (with the exception of "no-js" which Modernizr removes already).
+ */
+
+.js .#{$aligent-namespace}u-no-js,
+.js %#{$aligent-namespace}u-no-js { // Hide anything with the no-js class when JavaScript is enabled
+    @extend %#{$aligent-namespace}u-hidden;
+}
+
+.no-js .#{$aligent-namespace}u-js-only,
+.no-js %#{$aligent-namespace}u-js-only {  // Hide anything with the js-only class when JavaScript is disabled
+    @extend %#{$aligent-namespace}u-hidden;
+}
+
+.retina .#{$aligent-namespace}u-no-retina,
+.retina %#{$aligent-namespace}u-no-retina {  // Hide anything with the no-retina class if the browser has a device pixel ratio greater than 1
+    @extend %#{$aligent-namespace}u-hidden;
+}
+
+.no-retina .#{$aligent-namespace}u-retina-only,
+.no-retina %#{$aligent-namespace}u-retina-only {  // Hide anything with the retina-only class if the browser has a device pixel ratio of 1 or less
+    @extend %#{$aligent-namespace}u-hidden;
+}
+
+
+
+
+
+/**
+ * Hide elements from print
+ */
+
+.#{$aligent-namespace}u-no-print,
+%#{$aligent-namespace}u-no-print {
+
+    @media print {
+        display: none !important;
+    }
+
+}
+
+
+/**
+ * Hide elements except in print
+ */
+
+.#{$aligent-namespace}u-print-only,
+%#{$aligent-namespace}u-print-only {
+
+    @media not print {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+}

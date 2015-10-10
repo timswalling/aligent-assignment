@@ -1,0 +1,20 @@
+/*------------------------------------*\
+    #FUNCTIONS
+\*------------------------------------*/
+
+// Add percentage of white to a colour
+
+@function tint($color, $percent){
+    
+    @return mix(white, $color, $percent);
+    
+}
+
+
+// Add percentage of black to a colour
+
+@function shade($color, $percent){
+    
+    @return mix(black, $color, $percent);
+
+}

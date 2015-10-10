@@ -1,0 +1,61 @@
+/*------------------------------------*\
+    #VARIANT SETTINGS
+\*------------------------------------*/
+
+/**
+ * Site settings that are derived from the main's primary settings.
+ **/
+
+/**
+ * WARNING
+ *
+ * These settings should rarely be changed directly, as this may have 
+ * far-reaching consequences. Instead, redefine variables at the 
+ * series/group/site level.
+ **/
+
+/* = High-level colours = */
+
+$aligent-color-brand--light: tint($aligent-color-brand, $aligent-tint-base);
+$aligent-color-brand--medium-light: tint($aligent-color-brand, 50%);
+$aligent-color-brand--dark: shade($aligent-color-brand, $aligent-shade-base);
+$aligent-color-brand--medium-dark: shade($aligent-color-brand, 50%);
+
+$aligent-color-brand-secondary--light: null;
+$aligent-color-brand-secondary--medium-light: null;
+
+@if $aligent-color-brand-secondary != null {
+    
+    $aligent-color-brand-secondary--light: tint($aligent-color-brand-secondary, $aligent-tint-base);
+    $aligent-color-brand-secondary--medium-light: tint($aligent-color-brand-secondary, 50%);
+
+}
+
+
+
+
+
+/* = Utility colours = */
+
+$aligent-color-success--light: tint(green, $aligent-tint-base) !default;
+
+$aligent-color-warning--light: tint(orange, $aligent-tint-base) !default;
+
+$aligent-color-danger--light: tint(red, $aligent-tint-base) !default;
+
+
+
+
+
+/* = Fonts = */
+
+$aligent-font-size-base--large: ($aligent-line-height-base + $aligent-font-size-base)/2;
+
+
+
+
+
+/* = Layout = */
+
+$aligent-spacing-unit-base--small: round($aligent-spacing-unit-base / 2);
+$aligent-spacing-unit-base--large: round($aligent-spacing-unit-base * 2);

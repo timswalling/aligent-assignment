@@ -1,0 +1,16 @@
+/*------------------------------------*\
+    #FONTS
+\*------------------------------------*/
+
+/**
+ * Add extend-only classes for main fonts, so multiple properties can be
+ * declared in the one place.
+ */
+
+%#{$aligent-namespace}font-base {
+    font-family:    $aligent-font-family-base-fallback;
+}
+
+.wf-active %#{$aligent-namespace}font-base {
+    font-family: $aligent-font-family-base, $aligent-font-family-base-fallback;
+}

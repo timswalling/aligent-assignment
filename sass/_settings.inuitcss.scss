@@ -1,0 +1,51 @@
+/*------------------------------------*\
+    #INUITCSS FRAMEWORK SETTINGS
+\*------------------------------------*/
+
+/**
+ * Map sagovau settings to inuitcss’ to override its defaults; add any 
+ * additional global settings.
+ */
+
+/* = Namespace = */
+
+$inuit-namespace: $aligent-namespace;
+
+
+/* = High-level base settings = */
+
+$inuit-base-font-size: $aligent-font-size-base;
+$inuit-base-line-height: $aligent-line-height-base;
+$inuit-base-spacing-unit: $aligent-spacing-unit-base;
+$inuit-base-text-color: $aligent-color-text-base;
+$inuit-base-background-color: $aligent-color-background-base;
+
+
+/* = Repsonsive breakpoints = */
+
+$breakpoints: $aligent-media-queries;
+$inuit-responsive-settings: true;
+
+
+
+
+
+/* = Box = */
+
+$inuit-enable-box--small: true;
+
+
+
+
+
+/* = Layout = */
+
+$inuit-enable-layout--small: true;
+
+
+
+
+
+/* = Widths = */
+
+$inuit-use-fractions: false;    // Using "/" in class names may cause problems with templating engines

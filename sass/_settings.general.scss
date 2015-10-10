@@ -1,0 +1,129 @@
+/*------------------------------------*\
+    #GENERAL SETTINGS
+\*------------------------------------*/
+
+/**
+ * WARNING
+ *
+ * These settings should rarely be changed directly, as this may have
+ * far-reaching consequences. Instead, redefine variables at the
+ * series/group/site level.
+ **/
+
+/* = Namespace = */
+
+/**
+ * A prefix that can be used to prevent class name collisions. Use "null" to
+ * ignore.
+ **/
+
+$aligent-namespace: null;
+
+
+
+
+
+/* = File locations and prefixes = */
+
+$aligent-path-png: null;
+$aligent-path-svg: null;
+
+$aligent-path-fonts: "";
+
+
+$aligent-file-prefix: "";
+
+
+
+
+
+/* = Colours = */
+
+/**
+ * All colours for in settings files; only tints/shades or combinations of these
+ * colours may be used elsewhere.
+ **/
+
+/* == Tint and shade percentage == */
+
+/**
+ * Set the default tint/shade percentage for creating lighter/darker version
+ * of a colour.
+ **/
+
+$aligent-tint-base: 90%;
+$aligent-shade-base: $aligent-tint-base;
+
+
+/* == High-level colours == */
+
+$aligent-color-brand: #333;
+
+$aligent-color-brand-secondary: null;
+
+
+$aligent-color-text-base: tint($aligent-color-brand, 50%);
+$aligent-color-text-reverse: white;
+$aligent-color-background-base: white;
+
+
+
+
+
+/* == Utility colours == */
+
+$aligent-color-success: shade(green, 20%);
+
+$aligent-color-warning: shade(orange, 20%);
+
+$aligent-color-danger: shade(red, 20%);
+
+
+
+
+
+/* = Fonts =*/
+
+$aligent-font-family-base: "Open Sans";
+$aligent-font-family-base-fallback: Helvetica,Arial,sans-serif;
+
+
+$aligent-font-size-base: 16px;
+$aligent-line-height-base: 24px;
+
+
+
+
+
+/* = Layout = */
+
+$aligent-spacing-unit-base: $aligent-line-height-base;
+
+
+$aligent-max-width: 1080px;
+
+
+
+
+
+/* = Animation = */
+
+$aligent-transition-time: 0.3s;
+
+
+
+
+
+/* = Media queries = */
+
+/**
+ * This notation has been chosen as it is compatible with Inuit CSS
+ * `media-query()` mixin found in `inui-responsive-tools/_tools.responsive`.
+ **/
+
+$aligent-media-queries: (
+    "small-and-up"  "screen and (min-width: 480px)",
+    "medium-and-up" "screen and (min-width: 640px)",
+    "large-and-up"  "screen and (min-width: 720px)",
+    "huge"          "screen and (min-width: 1024px)"
+);

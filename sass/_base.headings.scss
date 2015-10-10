@@ -1,0 +1,122 @@
+/*------------------------------------*\
+    #HEADINGS
+\*------------------------------------*/
+
+/**
+ * Basic heading styles
+ **/
+
+// Individual heading settings for h1-h6 must be defined sepeartely
+
+$aligent-headings-settings: (
+    h1: $aligent-h1-settings,
+    h2: $aligent-h2-settings,
+    h3: $aligent-h3-settings,
+    h4: $aligent-h4-settings,
+    h5: $aligent-h5-settings,
+    h6: $aligent-h6-settings
+) !default;
+
+$aligent-enable-headings-utility-classes: false !default;  // Create utility classes to mimic heading styles - csswizardry.com/2012/02/pragmatic-practical-font-sizing-in-css
+
+
+
+
+
+// Set default heading behaviour
+
+h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+
+    & strong, & b {
+        font-weight: inherit;    // Prevent CMS users from applying font weights within headings
+    }
+
+}
+
+
+
+
+
+/**
+ * 1. Loop through the setting maps to create the headings
+ *
+ * 2. Add the necessary extend-only classes, if required.
+ *
+ * 3. If the font-family is either the base font or highlight font, extend the
+ *    appropriate class. (This allows other parameters, such as letter-spacing,
+ *    to be set elsewhere.
+ **/
+
+@each $heading, $settings in $aligent-headings-settings {   //* [1] */
+
+    @if $heading == h1 { $heading: "h1, %alpha"; }          //* [2] */
+
+    @else if $heading == h2 { $heading: "h2, %beta"; }      //* [2] */
+
+    @else if $heading == h3 { $heading: "h3, %gamma"; }     //* [2] */
+
+    @else if $heading == h4 { $heading: "h4, %delta"; }     //* [2] */
+
+    @else if $heading == h5 { $heading: "h5, %epsilon"; }   //* [2] */
+
+    @else if $heading == h6 { $heading: "h6, %zeta"; }      //* [2] */
+
+    #{$heading} {
+
+        @each $property, $value in $settings {  /* [1] */
+
+            @if $property == font-family and $value == $aligent-font-family-base {   /* [3] */
+
+                @extend %#{$aligent-namespace}font-base;
+
+            } @else if $property == font-family and $value == $aligent-font-family-highlight {     /* [3] */
+
+                @extend %#{$aligent-namespace}font-highlight;
+
+            } @else if $property == font-size {
+
+                @include inuit-font-size($value);
+
+            } @else {
+
+                #{$property}: $value;
+
+            }
+
+        }
+
+    }
+
+}
+
+
+// Create heading utility classes, if required
+
+@if $aligent-enable-headings-utility-classes == true {
+
+    .#{$aligent-namespace}alpha {
+        @extend %#{$aligent-namespace}alpha;
+    }
+
+    .#{$aligent-namespace}beta {
+        @extend %#{$aligent-namespace}beta;
+    }
+
+    .#{$aligent-namespace}gamma {
+        @extend %#{$aligent-namespace}gamma;
+    }
+
+    .#{$aligent-namespace}delta {
+        @extend %#{$aligent-namespace}delta;
+    }
+
+    .#{$aligent-namespace}epsilon {
+        @extend %#{$aligent-namespace}epsilon;
+    }
+
+    .#{$aligent-namespace}zeta {
+        @extend %#{$aligent-namespace}zeta;
+    }
+
+}
