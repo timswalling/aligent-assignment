@@ -1,0 +1,25 @@
+/*------------------------------------*\
+    #SITE-HEADER
+\*------------------------------------*/
+
+@at-root {
+
+    // Local variables
+
+    $logotype-width: 172px;
+
+
+    // Classes
+
+    /*header*/.#{$aligent-namespace}site-header {
+        padding: $aligent-spacing-unit-base * 4/3;
+    }
+
+
+        /*a*/.#{$aligent-namespace}site-header__home {
+            display: block;
+            margin: 0 auto;
+            width: $logotype-width;
+        }
+
+}
