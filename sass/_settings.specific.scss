@@ -31,7 +31,8 @@ $aligent-h1-settings: (
     color: $aligent-color-brand,
     font-family: $aligent-font-family-base,
     font-size: 2 * $aligent-line-height-base,    /* [1] */
-    font-weight: 300
+    font-weight: 300,
+    text-align: center
 );
 $aligent-h2-settings: (
     color: $aligent-color-brand,
@@ -72,6 +73,19 @@ $aligent-page-color-background: $aligent-color-brand;
 /* == MAIN == */
 
 $aligent-main-color-background: white;
+
+
+
+
+
+/* = OBJECTS = */
+
+$aligent-wrapper-extras: (
+    content: (
+        max-width: 784px,
+        padding-bottom: 4 * $aligent-spacing-unit-base
+    )
+);
 
 
 

@@ -3,17 +3,13 @@
 \*------------------------------------*/
 
 /**
- * Container with max-width for ensuring content width is restricted uniformly 
+ * Container with max-width for ensuring content width is restricted uniformly
  * on large screens.
  */
 
 // Disable all variations by default so unneeded items are not included.
 
-$aligent-enable-wrapper--ph: false !default; // add horizontal padding
-$aligent-enable-wrapper--ph-small: false !default; // add half-width horizontal padding
-$aligent-enable-wrapper--ph-large: false !default; // add double-width horizontal padding
-
-$aligent-enable-wrapper--large-and-up-ph-small: false !default; // add half-width horizontal padding on large devices
+$aligent-wrapper-extras: null !default;
 
 
 .#{$aligent-namespace}wrapper,
@@ -26,56 +22,35 @@ $aligent-enable-wrapper--large-and-up-ph-small: false !default; // add half-widt
 }
 
 
-// Add horizontal padding
+// Generate additonal wrappers
 
-@if $aligent-enable-wrapper--ph == true {
-    
-    .#{$aligent-namespace}wrapper--ph,
-    %#{$aligent-namespace}wrapper--ph {
-        max-width: $aligent-max-width + 2 * $aligent-spacing-unit-base;
-        padding: 0 $aligent-spacing-unit-base;
-    }
-    
-}
-
-
-// Add small horizontal padding.
-
-@if $aligent-enable-wrapper--ph-small == true {
-    
-    .#{$aligent-namespace}wrapper--ph-small,
-    %#{$aligent-namespace}wrapper--ph-small {
-        max-width: $aligent-max-width + 2 * $aligent-spacing-unit-base--small;
-        padding: 0 $aligent-spacing-unit-base--small;
-    }
-    
-}
+/**
+ * Extra wrappers are defined using the syntax:
+ *
+ * $aligent-wrapper-extras: (
+ *     modifier: (
+ *         property: value,
+ *         property: value,
+ *         ...
+ *         property: value
+ *     )
+ * );
+ **/
 
 
-// Add large horizontal padding
+@if $aligent-wrapper-extras != null {
 
-@if $aligent-enable-wrapper--ph-large == true {
-        
-    .#{$aligent-namespace}wrapper--ph-large,
-    %#{$aligent-namespace}wrapper--ph-large {
-        max-width: $aligent-max-width + 2 * $aligent-spacing-unit-base--large;
-        padding: 0 $aligent-spacing-unit-base--large;
-    }
-    
-}
+    @each $modifier, $settings in $aligent-wrapper-extras {
 
+        @each $property, $value in $settings {
 
-// Add small horizontal padding on large-and-up devices
+            .#{$aligent-namespace}wrapper--#{$modifier},
+            %#{$aligent-namespace}wrapper--#{$modifier} {
+                #{$property}: $value;
+            }
 
-@if $aligent-enable-wrapper--large-and-up-ph-small == true {
-
-    .#{$aligent-namespace}wrapper--large-and-up-ph-small {
-
-        @include media-query(large-and-up) {
-            max-width: $aligent-max-width + 2 * $aligent-spacing-unit-base--small;
-            padding: 0 $aligent-spacing-unit-base--small;
         }
-        
+
     }
-    
+
 }
