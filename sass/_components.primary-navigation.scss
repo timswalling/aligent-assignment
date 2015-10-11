@@ -21,12 +21,8 @@ $aligent-primary-navigation-breakpoint: huge !default;
         @extend %#{$inuit-list-bare-namespace}clearfix;
 
         background-color: $background-color-main;
-        color: $aligent-color-brand;
-        font-weight: bold;
-        font-size: $font-size;
-        position: relative;
+        position: relative;    // Make sure elements are positioned relative to the nav
         text-align: center;
-        text-transform: uppercase;
     }
 
     // Fixed position version
@@ -68,11 +64,14 @@ $aligent-primary-navigation-breakpoint: huge !default;
              **/
 
             /*button, a*/.#{$aligent-namespace}primary-navigation__item {
-                color: inherit;    /* [1] */
+                color: $aligent-color-brand;
                 display: inline-block;    /* [2] */
+                font-weight: bold;
+                font-size: $font-size;
                 line-height: $height;     /* [3] */
                 padding: 0 $padding;      /* [4] */
                 text-decoration: none;    /* [1] */
+                text-transform: uppercase;
             }
 
 
@@ -139,7 +138,6 @@ $aligent-primary-navigation-breakpoint: huge !default;
                 position: absolute;  /* [2] */
                 left: 0;             /* [2] */
                 top: 0;              /* [2] */
-                text-transform: inherit;    /* [1] */
 
                 &.is-active {
 
@@ -167,10 +165,20 @@ $aligent-primary-navigation-breakpoint: huge !default;
              *
              * 2. Display all list items as inline-block so they stack
              *    horizontally and wrap nicely
+             *
+             * 3. Use absolute positioning on small devices (for drop-down and
+             *    right-positioned elements)
+             *
+             * 4. Use static positioning on larger devices so floats can be used
              **/
 
             /*ul*/.#{$aligent-namespace}primary-navigation__list {
                 @extend %#{$inuit-list-bare-namespace}list-bare;    /* [1] */
+                position: absolute;    /* [3] */
+
+                @include media-query($aligent-primary-navigation-breakpoint) {
+                    position: static;    /* [4] */
+                }
 
                 & > li {
                     display: inline-block;    /* [2] */
@@ -200,23 +208,6 @@ $aligent-primary-navigation-breakpoint: huge !default;
                     box-shadow: none;    /* [2] */
                     float: left;         /* [2] */
                     width: auto;         /* [2] */
-                }
-
-            }
-
-            /**
-             * Top-level lists
-             *
-             * These are absolutely positioned on small devices (eg for
-             * drop-down menus or right-aliged ones), but are statically
-             * positioned on larger ones.
-             **/
-
-            /*ul*/.#{$aligent-namespace}primary-navigation__list--top-level {
-                position: absolute;
-
-                @include media-query($aligent-primary-navigation-breakpoint) {
-                    position: static;
                 }
 
             }
