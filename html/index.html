@@ -90,7 +90,7 @@
 
             <div class="primary-navigation__wrapper">
 
-                <button class="primary-navigation__toggle     primary-navigation__item    u-hidden-huge" type="button">Menu</button>
+                <button class="primary-navigation__toggle     primary-navigation__item    u-hidden-huge" data-toggle="active" data-toggle-target=".js-primary-navigation-list" type="button">Menu</button>
 
                 <a class="primary-navigation__home    primary-navigation__item" href="/">
 
@@ -98,7 +98,7 @@
 
                 </a><!-- /.primary-navigation__home -->
 
-                <ul class="primary-navigation__list  primary-navigation__list--top-level  primary-navigation__list--responsive  u-display-block-huge">
+                <ul class="primary-navigation__list  primary-navigation__list--top-level  primary-navigation__list--responsive  u-display-block-huge    js-primary-navigation-list">
 
                     {{>menuItemList}}
 
@@ -297,6 +297,13 @@
         </footer>
 
         <!-- End site footer -->
+
+
+        <!-- Scripts -->
+
+        <script src="js/main.js"></script>
+
+        <!-- End scripts -->
 
     </body>
 

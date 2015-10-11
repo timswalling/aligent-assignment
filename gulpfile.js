@@ -170,11 +170,19 @@ sassOptions = {
  *          ],
  *          destination: paths.dest.js,
  *          filename: "fancybox.custom.js"
- *      },
+ *      }
  *  ];
  **/
 
-jsList = [];
+jsList = [
+    {
+        source: [
+            paths.src.js + "ui-toggle.js"
+        ],
+        destination: paths.dest.js,
+        filename: "main.js"
+    }
+];
 
 
 
