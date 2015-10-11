@@ -177,7 +177,8 @@ sassOptions = {
 jsList = [
     {
         source: [
-            paths.src.js + "ui-toggle.js"
+            paths.src.js + "ui-toggle.js",
+            paths.src.js + "sticky-navigation.js"
         ],
         destination: paths.dest.js,
         filename: "main.js"
@@ -262,7 +263,7 @@ gulp.task('js-concat', function () {
 });
 
 gulp.task('js-concat:watch', function () {
-    gulp.watch(paths.src.js + '**/*.js', ['js-bundle']);
+    gulp.watch(paths.src.js + '**/*.js', ['js-concat']);
 });
 
 
