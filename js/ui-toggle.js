@@ -22,8 +22,6 @@
                 mode = toggles[i].getAttribute('data-toggle'),
                 targetSelector = toggles[i].getAttribute('data-toggle-target');
 
-            console.log(targetSelector);
-
             stateClass = 'is-' + mode;
 
             toggleClass = function (targetClass, targetElement) {
@@ -46,8 +44,6 @@
 
                 var ariaExpanded = this.getAttribute("aria-expanded") === 'true',
                     targets = document.querySelectorAll(targetSelector);
-
-                console.log(targetSelector);
 
                 this.setAttribute('aria-expanded', !ariaExpanded);
 
