@@ -1,0 +1,39 @@
+{{#menuItems}}
+
+<li class="drop-down">
+
+    <a class="primary-navigation__item" href="{{url}}">{{title}}</a>
+
+    <div class="drop-down__body">
+
+        <div class="drop-down__wrapper">
+
+            <ul class="layout">
+
+                {{> categoryList}}
+
+                <li class="layout__item    u-1-of-5">
+
+                    <a class="product" href="/product">
+
+                        <figure class="product__container">
+
+                            <img class="product__image" src="images/product-image.png">
+
+                            <figcaption>Magento</figcaption>
+
+                        </figure><!-- /.product -->
+
+                    </a><!-- /.product -->
+
+                <!-- /li.layout__item -->
+
+            </ul><!-- /.layout -->
+
+        </div><!-- /.drop-down__wrapper -->
+
+    </div><!-- /.drop-down__body -->
+
+<!-- /li.drop-down -->
+
+{{/menuItems}}

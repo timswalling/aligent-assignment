@@ -15,6 +15,9 @@ var argv = require('yargs').argv,   // Pass agruments using the command line
     jsList,   // List of JavaScripts to combine
     minifyCss = require('gulp-minify-css'),     // Minify CSS
     minifyCssOptions,
+    mustache = require('gulp-mustache-plus'),
+    mustacheData,
+    mustachePartials,
     paths,  // Frequently used file paths
     pipe = require('multipipe'),    // Used in conjuction with gulp-if to perform multiple conditional transformations
     rev = require('gulp-rev'),      // Add a hash-based fingerprint to the output filename
@@ -118,6 +121,28 @@ minifyCssOptions = {
 };
 
 
+mustacheData = {
+    categories: [
+        {title: 'Category 1', url: '/category-1'},
+        {title: 'Category 2', url: '/category-2'},
+        {title: 'Category 3', url: '/category-3'},
+        {title: 'Category 4', url: '/category-4'}
+    ],
+    menuItems: [
+        {title: 'Menu Item 1', url: '/menu-item-1'},
+        {title: 'Menu Item 2', url: '/menu-item-2'},
+        {title: 'Menu Item 3', url: '/menu-item-3'},
+        {title: 'Menu Item 4', url: '/menu-item-4'},
+        {title: 'Menu Item 5', url: '/menu-item-5'}
+    ]
+};
+
+mustachePartials = {
+    categoryList: paths.src.html + 'mustache/category-list.mustache',
+    menuItemList: paths.src.html + 'mustache/menu-item-list.mustache'
+};
+
+
 sassOptions = {
     includePaths: ['./node_modules']
 };
@@ -174,13 +199,14 @@ gulp.task('clean', function () {
 // Copy and minify HTML
 
 gulp.task('html', function () {
-    gulp.src(paths.src.html + '*.html')
-      .pipe(gulpif(argv.production, htmlmin(htmlminOptions)))
-      .pipe(gulp.dest(paths.dest.root))
+    gulp.src(paths.src.html + '**/*.{html,mustache}')
+        .pipe(mustache(mustacheData, {}, mustachePartials))
+        .pipe(gulpif(argv.production, htmlmin(htmlminOptions)))
+        .pipe(gulp.dest(paths.dest.root))
 });
 
 gulp.task('html:watch', function () {
-    gulp.watch(paths.src.html + '*', ['html']);   // TODO consider changing to gulp-watch so only changed files are processed
+    gulp.watch(paths.src.html + '**/*.{html,mustache}', ['html']);   // TODO consider changing to gulp-watch so only changed files are processed
 });
 
 

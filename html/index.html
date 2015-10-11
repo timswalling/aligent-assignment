@@ -100,79 +100,7 @@
 
                 <ul class="primary-navigation__list  primary-navigation__list--top-level  primary-navigation__list--responsive  u-display-block-huge">
 
-                    <li class="drop-down">
-
-                        <a class="primary-navigation__item" href="/item-1">Menu Item 1</a>
-
-                        <div class="drop-down__body">
-
-                            <div class="drop-down__wrapper  drop-down__wrapper--pl">
-
-                                <ul class="layout">
-
-                                    <li class="layout__item    u-1-of-5">
-
-                                        Category
-
-                                        <ul class="list-bare">
-
-                                            <li>
-
-                                                <a>Level 3 Item</a>
-
-                                            <li>
-
-                                                <a>Level 3 Item</a>
-
-                                            <li>
-
-                                                <a>Level 3 Item</a>
-
-                                            <li>
-
-                                                <a>Level 3 Item</a>
-
-                                        </ul>
-                                        
-                                    <li class="layout__item    u-1-of-5">Drop-down list goes here
-
-                                    <li class="layout__item    u-1-of-5">Drop-down list goes here
-
-                                    <li class="layout__item    u-1-of-5">Drop-down list goes here
-
-                                    <li class="layout__item    u-1-of-5">Drop-down list goes here
-
-                                </ul>
-
-                            </div>
-
-                        </div>
-
-                    </li>
-
-                    <li>
-
-                        <a class="primary-navigation__item" href="/item-2">Menu Item 2</a>
-
-                    </li>
-
-                    <li>
-
-                        <a class="primary-navigation__item" href="/item-3">Menu Item 3</a>
-
-                    </li>
-
-                    <li>
-
-                        <a class="primary-navigation__item" href="/item-4">Menu Item 4</a>
-
-                    </li>
-
-                    <li>
-
-                        <a class="primary-navigation__item" href="/item-5">Menu Item 5</a>
-
-                    </li>
+                    {{>menuItemList}}
 
                 </ul><!-- ./primary-navigation__list -->
 
@@ -188,41 +116,131 @@
 
                                 <ul class="layout">
 
-                                    <li class="layout__item    u-1-of-5">Drop-down list goes here
+                                    <li class="layout__item    u-1-of-5">
 
-                                    <li class="layout__item    u-1-of-5">Drop-down list goes here
+                                        <a class="product" href="/product">
 
-                                    <li class="layout__item    u-1-of-5">Drop-down list goes here
+                                            <figure class="product__container">
 
-                                    <li class="layout__item    u-1-of-5">Drop-down list goes here
+                                                <img class="product__image" src="images/product-image.png">
+
+                                                <figcaption>Item 1</figcaption>
+
+                                            </figure><!-- /.product__container -->
+
+                                        </a><!-- /.product -->
+
+                                    <!-- /li.layout__item -->
+
+                                    <li class="layout__item    u-1-of-5">
+
+                                        <a class="product" href="/product">
+
+                                            <figure class="product__container">
+
+                                                <img class="product__image" src="images/product-image.png">
+
+                                                <figcaption>Item 2</figcaption>
+
+                                            </figure><!-- /.product__container -->
+
+                                        </a><!-- /.product -->
+
+                                    <!-- /li.layout__item -->
+
+                                    <li class="layout__item    u-1-of-5">
+
+                                        <a class="product" href="/product">
+
+                                            <figure class="product__container">
+
+                                                <img class="product__image" src="images/product-image.png">
+
+                                                <figcaption>Item 3</figcaption>
+
+                                            </figure><!-- /.product__container -->
+
+                                        </a><!-- /.product -->
+
+                                    <!-- /li.layout__item -->
+
+                                    <li class="layout__item    u-1-of-5">
+
+                                        <a class="product" href="/product">
+
+                                            <figure class="product__container">
+
+                                                <img class="product__image" src="images/product-image.png">
+
+                                                <figcaption>Item 4</figcaption>
+
+                                            </figure><!-- /.product__container -->
+
+                                        </a><!-- /.product -->
+
+                                    <!-- /li.layout__item -->
 
                                     <li class="layout__item    u-1-of-5">
 
                                         <ul class="layout">
 
-                                            <li class="layout__item u-1-of-2">Item 1
+                                            <li class="layout__item u-1-of-2">
 
-                                            <li class="layout__item u-1-of-2">Item 2
+                                                <a class="product" href="/product">
 
-                                            <li class="layout__item u-1-of-2">Item 3
+                                                    <img class="product__thumbnail" src="images/product-image.png">
 
-                                            <li class="layout__item u-1-of-2">Item 4
+                                                </a><!-- /.product -->
 
-                                        </ul>
+                                            <!-- /li.layout__item -->
 
-                                </ul>
+                                            <li class="layout__item u-1-of-2">
 
-                            </div>
+                                                <a class="product" href="/product">
 
-                        </div>
+                                                    <img class="product__thumbnail" src="images/product-image.png">
 
-                    </li>
+                                                </a><!-- /.product -->
+
+                                            <!-- /li.layout__item -->
+
+                                            <li class="layout__item u-1-of-2">
+
+                                                <a class="product" href="/product">
+
+                                                    <img class="product__thumbnail" src="images/product-image.png">
+
+                                                </a><!-- /.product -->
+
+                                            <!-- /li.layout__item -->
+
+                                            <li class="layout__item u-1-of-2">
+
+                                                <a class="product" href="/product">
+
+                                                    <img class="product__thumbnail" src="images/product-image.png">
+
+                                                </a><!-- /.product -->
+
+                                            <!-- /li.layout__item -->
+
+                                        </ul><!-- /.layout-->
+
+                                    <!-- /li.layout__item -->
+
+                                </ul><!-- /.layout-->
+
+                            </div><!-- /.drop-down__wrapper -->
+
+                        </div><!-- /.drop-down__body -->
+
+                    </li><!-- /.drop-down -->
 
                 </ul><!-- /.primary-navigation__list -->
 
             </div><!-- /.primary-navigation__wrapper -->
 
-        </nav>
+        </nav><!-- /.primary-navigation -->
 
         <!-- End primary navigation -->
 
