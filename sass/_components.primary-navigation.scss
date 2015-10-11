@@ -1,0 +1,236 @@
+/*------------------------------------*\
+    #PRIMARY-NAVIGATION
+\*------------------------------------*/
+
+$aligent-primary-navigation-breakpoint: huge !default;
+
+
+@at-root {
+
+    // Local variables
+
+    $background-color-main: $aligent-color-brand--medium-light;
+    $font-size: (14px / $aligent-font-size-base) * 100%;    // Set to 14px using proportional sizing
+    $height: 60px;
+    $logo-width: 44px;    // Necessary for animating the appearance of the logo
+    $padding: $aligent-spacing-unit-base;
+
+    // Classes
+
+    /*nav*/.#{$aligent-namespace}primary-navigation {
+        @extend %#{$inuit-list-bare-namespace}clearfix;
+
+        background-color: $background-color-main;
+        color: $aligent-color-brand;
+        font-weight: bold;
+        font-size: $font-size;
+        position: relative;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    // Fixed position version
+    /*nav*/.#{$aligent-namespace}primary-navigation--fixed {
+        top: 0;
+        position: fixed;
+        width: 100%;
+    }
+
+
+        /**
+         * Create a modified wrapper just for use in this block
+         *
+         * 1. Extend the wrapper so the margins are set to auto
+         *
+         * 2. Add the width of the nav item padding to each side
+         **/
+
+        /*div*/.#{$aligent-namespace}primary-navigation__wrapper {
+            @extend %#{$aligent-namespace}wrapper;    /* [1] */
+
+            max-width: $aligent-max-width + 2 * $aligent-spacing-unit-base;    /* [2] */
+        }
+
+
+            /**
+             * Generic styles that apply to most of the high level elements in
+             * the nav.
+             *
+             * 1. Override colour and text decoration (for links)
+             *
+             * 2. Use inline-block so elements stack horizontally
+             *
+             * 3. Use line-height to set a consistent height across all elements
+             *
+             * 4. Add horizontal padding to make the elements easy to hit. Use
+             *    the $padding variable, as it's linked to the max-width of the
+             *    navigation wrapper.
+             **/
+
+            /*button, a*/.#{$aligent-namespace}primary-navigation__item {
+                color: inherit;    /* [1] */
+                display: inline-block;    /* [2] */
+                line-height: $height;     /* [3] */
+                padding: 0 $padding;      /* [4] */
+                text-decoration: none;    /* [1] */
+            }
+
+
+            /**
+             * The home link in the nav bar. This is only displayed when the
+             * navigation block is fixed.
+             *
+             * 1. Position the link centrally on small devices
+             *
+             * 2. Hide the link from view by default
+             *
+             * 3. Show the link if the navigation is fixed
+             *
+             * 4. Ensure a smooth transition between states
+             *
+             * 5. Use a specific width to enable the smooth transition (auto
+             *    won't work)
+             *
+             * 6. Float left on larger devices
+             **/
+
+            /*a*/.#{$aligent-namespace}primary-navigation__home {
+                margin: 0 auto;    /* [1] */
+                opacity: 0;        /* [2] */
+                padding: 0;        /* [2] */
+                transition: all $aligent-transition-time;    /* [4] */
+                visibility: hidden;    /* [2] */
+                width: 0;              /* [2] */
+
+                .#{$aligent-namespace}primary-navigation--fixed & {
+                    @extend %#{$aligent-namespace}u-display-block;
+                    opacity: 1;    /* [3] */
+                    padding: 0 $padding; /* [3] */
+                    visibility: visible;    /* [3] */
+                    width: $logo-width + 2 * $aligent-spacing-unit-base;    /* [3, 4, 5] */
+                }
+
+                @include media-query($aligent-primary-navigation-breakpoint) {
+                    float: left;    /* [6] */
+                    margin: 0;      /* [6] */
+                }
+
+            }
+
+
+                /*a*/.#{$aligent-namespace}primary-navigation__logotype {
+                    vertical-align: middle;    // Vertically align the logotype image
+                }
+
+
+            /**
+             * Menu toggle for small screens
+             *
+             * 1. Reset button styles
+             *
+             * 2. Stick to the left of the nav
+             *
+             * 3. Add a drop-down marker when active
+             **/
+
+            /*button*/.#{$aligent-namespace}primary-navigation__toggle {
+                background: none;    /* [1] */
+                border: none;        /* [1] */
+                position: absolute;  /* [2] */
+                left: 0;             /* [2] */
+                top: 0;              /* [2] */
+                text-transform: inherit;    /* [1] */
+
+                &.is-active {
+
+                    // Make sure the drop-down file is loaded, as it's required for this mixin
+
+                    $aligent-drop-down: false !default;    // Set a default value to avoid errors
+
+                    @if $aligent-drop-down != true {
+                        @import "_components.drop-down.scss";
+                    }
+
+                    &:after {
+                        @include drop-down-marker;    /* [3] */
+                    }
+
+                }
+
+            }
+
+
+            /**
+             * Generic list element. Use with modifiers for rich formatting
+             *
+             * 1. Remove list styling
+             *
+             * 2. Display all list items as inline-block so they stack
+             *    horizontally and wrap nicely
+             **/
+
+            /*ul*/.#{$aligent-namespace}primary-navigation__list {
+                @extend %#{$inuit-list-bare-namespace}list-bare;    /* [1] */
+
+                & > li {
+                    display: inline-block;    /* [2] */
+                }
+
+            }
+
+            /**
+             * Responsive list
+             *
+             * 1. Display as a drop-down menu on small devices
+             *
+             * 2. Display as a bare floating element on larger devices
+             *
+             * 4. Display when active
+             **/
+
+            /*ul*/.#{$aligent-namespace}primary-navigation__list--responsive {
+                @extend %#{$aligent-namespace}drop-down__body;    /* [1] */
+
+                &.is-active {
+                    @extend %#{$aligent-namespace}u-display-block;    /* [4] */
+                }
+
+                @include media-query($aligent-primary-navigation-breakpoint) {
+                    background: none;    /* [2] */
+                    box-shadow: none;    /* [2] */
+                    float: left;         /* [2] */
+                    width: auto;         /* [2] */
+                }
+
+            }
+
+            /**
+             * Top-level lists
+             *
+             * These are absolutely positioned on small devices (eg for
+             * drop-down menus or right-aliged ones), but are statically
+             * positioned on larger ones.
+             **/
+
+            /*ul*/.#{$aligent-namespace}primary-navigation__list--top-level {
+                position: absolute;
+
+                @include media-query($aligent-primary-navigation-breakpoint) {
+                    position: static;
+                }
+
+            }
+
+            // Right-aligned list
+
+            /*ul*/.#{$aligent-namespace}primary-navigation__list--right {
+                top: 0;
+                right: 0;
+
+                @include media-query($aligent-primary-navigation-breakpoint) {
+                    float: right;
+                }
+
+            }
+
+}

@@ -77,6 +77,7 @@
 
 /* = Base styling = */
 
+@import "inuit-images/_base.images.scss";
 @import "inuit-lists/_base.lists.scss";
 @import "_base.fonts.scss";
 @import "_base.headings.scss";
@@ -101,6 +102,8 @@
 
 /* = Components = */
 
+@import "_components.drop-down.scss";
+@import "_components.primary-navigation.scss";
 @import "_components.site-footer.scss";
 @import "_components.site-header.scss";
 
