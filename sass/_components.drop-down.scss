@@ -33,6 +33,7 @@ $aligent-drop-down-breakpoint: huge !default;
  **/
 
 /*div, li*/.#{$aligent-namespace}drop-down {
+    text-align: left;    // override values from ancestor elements
 
     @include media-query($aligent-drop-down-breakpoint) {
         &:hover:after {
@@ -43,7 +44,7 @@ $aligent-drop-down-breakpoint: huge !default;
 }
 
     /**
-     * The main content of the drop-down menu.
+     * The main drop-down element
      *
      * 1. Ensure the drop-down occupies the full width of the window
      *
@@ -52,13 +53,13 @@ $aligent-drop-down-breakpoint: huge !default;
      * 3. Display it on hover on larger devices
      **/
 
-    /*ul*/.#{$aligent-namespace}drop-down__body,
-    /*ul*/%#{$aligent-namespace}drop-down__body {
+    /*div*/.#{$aligent-namespace}drop-down__body,
+    /*div*/%#{$aligent-namespace}drop-down__body {
         background-color: $aligent-drop-down-color-background;
         box-shadow: 0 4px 4px rgba(0,0,0,0.1);
         display: none;    /* [2] */
-        position: absolute; /* [1] */
         left: 0;    /* [1] */
+        position: absolute; /* [1] */
         visibility: hidden;    /* [2] */
         width: 100%;    /* [1] */
 
@@ -70,6 +71,40 @@ $aligent-drop-down-breakpoint: huge !default;
         }
 
     }
+
+
+        /**
+         * Create a modified wrapper just for use in this block
+         *
+         * 1. Extend the wrapper so the margins are set to auto
+         *
+         * 2. Add padding to all sides
+         *
+         * 3. Add the width of the padding to the max-width
+         **/
+
+        /*div*/.#{$aligent-namespace}drop-down__wrapper {
+            @extend %#{$aligent-namespace}wrapper;    /* [1] */
+
+            max-width: $aligent-max-width + 2 * $aligent-spacing-unit-base;    /* [3] */
+            padding: $aligent-spacing-unit-base;    /* [2] */
+        }
+
+
+            /*a*/.#{$aligent-namespace}drop-down__heading {
+                @extend %#{$aligent-namespace}gamma;    // Match h3 style
+
+                display: block;
+                margin-bottom: $aligent-spacing-unit-base;
+                text-decoration: none;
+            }
+
+            /*a*/.#{$aligent-namespace}drop-down__link {
+                @include ui-link;    // Underline only on hover
+
+                color: inherit;
+                line-height: 2;      // Make tap targets easy to hit
+            }
 
 
 // Set a variable so we can tell if this file has already been included

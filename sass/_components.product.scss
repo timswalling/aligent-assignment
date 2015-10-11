@@ -1,0 +1,47 @@
+/*------------------------------------*\
+    #PRODUCT
+\*------------------------------------*/
+
+@at-root {
+
+    $image-width: 172px;    // Based on PSD
+    $thumbnail-width: $image-width/2;
+
+
+    /*a*/.#{$aligent-namespace}product {
+        @include ui-link;    // Underline only on hover
+
+        color: inherit;
+        display: block;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+
+        /**
+         * Use a figure element to hold the image and caption.
+         *
+         * Only required if a caption is present
+         **/
+
+        /*figure*/.#{$aligent-namespace}product__container {
+            margin: 0;
+        }
+
+
+            /*img*/.#{$aligent-namespace}product__image {
+                @extend %#{$aligent-namespace}thumbnail;
+
+                margin-bottom: $aligent-spacing-unit-base--small;
+                width: $image-width;;
+            }
+
+
+        /*img*/.#{$aligent-namespace}product__thumbnail {
+            @extend %#{$aligent-namespace}thumbnail;
+
+            margin-bottom: $aligent-spacing-unit-base;
+            width: $thumbnail-width;
+        }
+
+}
