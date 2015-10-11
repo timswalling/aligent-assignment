@@ -1,0 +1,77 @@
+/*------------------------------------*\
+    #DROP-DOWN
+\*------------------------------------*/
+
+$aligent-drop-down-color-background: $aligent-main-color-background !default;
+$aligent-drop-down-breakpoint: huge !default;
+
+
+// Create a mixin for the drop-down marker, as this will be used with specific
+// combinations of states and media queries that can't be handled using extends
+
+@mixin drop-down-marker {
+    $marker-height: $aligent-spacing-unit-base/3;
+
+    border-style: solid;
+    border-width: 0 $marker-height $marker-height $marker-height;
+    border-color: transparent transparent $aligent-drop-down-color-background transparent;
+    content: "";
+    display: block;
+    height: 0;
+    left: 50%;
+    margin-bottom: -100%;    // Ensure the element doesn't occupy any vertical space
+    margin-left: -$marker-height;
+    position: relative;
+    top: -$marker-height;
+    width: 0;
+}
+
+
+/**
+ * A container element for the drop-down. This is used to trigger display of the
+ * body, and to hold the marker
+ **/
+
+/*div, li*/.#{$aligent-namespace}drop-down {
+
+    @include media-query($aligent-drop-down-breakpoint) {
+        &:hover:after {
+            @include drop-down-marker;
+        }
+    }
+
+}
+
+    /**
+     * The main content of the drop-down menu.
+     *
+     * 1. Ensure the drop-down occupies the full width of the window
+     *
+     * 2. Hide it by default
+     *
+     * 3. Display it on hover on larger devices
+     **/
+
+    /*ul*/.#{$aligent-namespace}drop-down__body,
+    /*ul*/%#{$aligent-namespace}drop-down__body {
+        background-color: $aligent-drop-down-color-background;
+        box-shadow: 0 4px 4px rgba(0,0,0,0.1);
+        display: none;    /* [2] */
+        position: absolute; /* [1] */
+        left: 0;    /* [1] */
+        visibility: hidden;    /* [2] */
+        width: 100%;    /* [1] */
+
+        @include media-query($aligent-drop-down-breakpoint) {
+            .drop-down:hover > & {
+                display: block;    /* [3] */
+                visibility: visible;    /* [3] */
+            }
+        }
+
+    }
+
+
+// Set a variable so we can tell if this file has already been included
+
+$aligent-drop-down: true;
