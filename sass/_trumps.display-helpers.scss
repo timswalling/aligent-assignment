@@ -19,6 +19,20 @@ $aligent-enable-display-helpers-responsive: false !default; // Generate mobile-f
     visibility: hidden !important;
 }
 
+// Create extend-only trumps for use with element states
+
+%#{$aligent-namespace}u-display-block {
+    display: block !important;
+    visibility: visible !important;
+}
+
+// Create extend-only trumps for use with element states
+
+%#{$aligent-namespace}u-display-inline-block-#{$alias} {
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
 
 // Generate mobile-first helper classes to display hidden elements.
 
