@@ -1,63 +1,74 @@
+/*jslint browser:true */
+
 (function () {
 
-    if (!document.querySelector) {
+    'use strict';
 
+    // Fail silently if the browser doesn't support the necessary methods
+
+    if (!document.querySelectorAll) {
         return false;
-
     }
 
-    var targets = [],
-        toggles;
+    var i,
+        initToggle,
+        toggles = document.querySelectorAll("[data-toggle]");   // All the togglable elements
 
 
-    toggles = document.querySelectorAll("[data-toggle]");
+    // Initialise a toggle
+
+    initToggle = function (target) {
+
+        var stateClass, // The name of the class that indicates the current state of the toggle
+            toggleClass,    // Add or remove the state class
+            mode = target.getAttribute('data-toggle'),
+            targetSelector = target.getAttribute('data-toggle-target');
+
+        stateClass = 'is-' + mode;
+
+        toggleClass = function (targetClass, targetElement) {
+
+            var currentClass = targetElement.className,
+                regEx = new RegExp('(?:^|\\s)' + targetClass + '(?!\\S)');
+
+            // Check for a match
+
+            if (regEx.test(currentClass)) {
+                targetElement.className = currentClass.replace(regEx, ""); // If the class is found, remove it
+            } else {
+                targetElement.className += ' ' + targetClass;   // Otherwise add it
+            }
+
+        };
 
 
-    for (i = 0; i < toggles.length; i++) {
+        // Add event listeners
 
-        (function(i) {
+        target.onclick = function () {
 
-            var stateClass, // The name of the class that indicates the current state of the toggle
-                toggleClass,
-                mode = toggles[i].getAttribute('data-toggle'),
-                targetSelector = toggles[i].getAttribute('data-toggle-target');
+            var ariaExpanded = this.getAttribute("aria-expanded") === 'true',
+                targets = document.querySelectorAll(targetSelector);
 
-            stateClass = 'is-' + mode;
+            this.setAttribute('aria-expanded', !ariaExpanded);
 
-            toggleClass = function (targetClass, targetElement) {
+            toggleClass(stateClass, this);
 
-                var currentClass = targetElement.className,
-                    regEx = new RegExp('(?:^|\\s)' + targetClass + '(?!\\S)');
+            for (i = 0; i < targets.length; i += 1) {
 
-                // Check for a match
+                toggleClass(stateClass, targets[i]);
 
-                if (regEx.test(currentClass)) {
-                    targetElement.className = currentClass.replace(regEx, ""); // If the class is found, remove it
-                } else {
-                    targetElement.className += ' ' + targetClass;   // Otherwise add it
-                }
+            }
 
-            };
+        };
+
+    };
 
 
-            toggles[i].onclick = function () {
+    // Initialise all the toggles
 
-                var ariaExpanded = this.getAttribute("aria-expanded") === 'true',
-                    targets = document.querySelectorAll(targetSelector);
+    for (i = 0; i < toggles.length; i += 1) {
 
-                this.setAttribute('aria-expanded', !ariaExpanded);
-
-                toggleClass(stateClass, this);
-
-                for (i = 0; i < targets.length; i++) {
-
-                    toggleClass(stateClass, targets[i]);
-
-                }
-
-            };
-
-        }(i));
+        initToggle(toggles[i]);
 
     }
 
