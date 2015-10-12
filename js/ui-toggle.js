@@ -12,7 +12,7 @@
 
     var i,
         initToggle,
-        toggles = document.querySelectorAll("[data-toggle]");   // All the togglable elements
+        toggles = document.querySelectorAll('[data-toggle]');   // All the togglable elements
 
 
     // Initialise a toggle
@@ -21,7 +21,7 @@
 
         var stateClass, // The name of the class that indicates the current state of the toggle
             toggleClass,    // Add or remove the state class
-            mode = target.getAttribute('data-toggle'),
+            mode = target.getAttribute('data-toggle') || 'active',
             targetSelector = target.getAttribute('data-toggle-target');
 
         stateClass = 'is-' + mode;
@@ -46,7 +46,7 @@
 
         target.onclick = function () {
 
-            var ariaExpanded = this.getAttribute("aria-expanded") === 'true',
+            var ariaExpanded = this.getAttribute('aria-expanded') === 'true',
                 targets = document.querySelectorAll(targetSelector);
 
             this.setAttribute('aria-expanded', !ariaExpanded);
