@@ -1,0 +1,36 @@
+/*------------------------------------*\
+    #STICKY
+\*------------------------------------*/
+
+/**
+ * "Sticks" to the top/bottom of the viewport when scrolling.
+ *
+ * Browser support is patchy, so should be used only as progressive enhancement
+ * and/or with a polyfill.
+ */
+
+$aligent-sticky-types:  null !default;
+
+.#{$aligent-namespace}sticky {
+    position: relative; // Fallback for unsupported browsers when not stuck
+    position: sticky;
+
+    .not-sticky &.is-fixed {
+        position: fixed;    // Fallback for unsupported browsers when stuck
+    }
+
+}
+
+// Variations
+
+@each $modifier, $settings in $aligent-sticky-types {
+
+    .#{$aligent-namespace}sticky--#{$modifier} {
+
+        @each $property, $value in $settings {
+            #{$property}: $value;
+        }
+
+    }
+
+}

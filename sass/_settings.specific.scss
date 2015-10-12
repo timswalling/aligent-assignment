@@ -81,6 +81,16 @@ $aligent-main-color-background: white;
 
 /* = OBJECTS = */
 
+$aligent-sticky-types: (
+    top-flush: (
+        top: 0
+    )
+);
+
+
+
+/* == WRAPPER == */
+
 $aligent-wrapper-extras: (
     content: (
         max-width: 784px,
