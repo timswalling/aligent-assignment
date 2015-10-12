@@ -208,7 +208,7 @@ gulp.task('clean', function () {
 // Copy and minify HTML
 
 gulp.task('html', function () {
-    gulp.src(paths.src.html + '**/*.{html,mustache}')
+    gulp.src(paths.src.html + '**/*.html')
         .pipe(mustache(mustacheData, {}, mustachePartials))
         .pipe(gulpif(argv.production, htmlmin(htmlminOptions)))
         .pipe(gulp.dest(paths.dest.root))
