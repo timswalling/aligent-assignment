@@ -100,7 +100,7 @@ $aligent-primary-navigation-breakpoint: huge !default;
                 visibility: hidden;    /* [2] */
                 width: 0;              /* [2] */
 
-                .#{$aligent-namespace}primary-navigation--fixed & {
+                .#{$aligent-namespace}primary-navigation.is-fixed & {
                     @extend %#{$aligent-namespace}u-display-block;
                     opacity: 1;    /* [3] */
                     padding: 0 $padding; /* [3] */
