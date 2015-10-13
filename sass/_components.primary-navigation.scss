@@ -112,9 +112,16 @@ $aligent-primary-navigation-breakpoint: huge !default;
 
             }
 
+                /**
+                 * 1. Apply a fixed max-width and proportional width to overcome
+                 *    a bug in Safari 4 that incorrectly handles max-width in
+                 *    elements that a not visible.
+                 **/
 
                 /*a*/.#{$aligent-namespace}primary-navigation__logotype {
+                    max-width: $logo-width;    /* [1] */
                     vertical-align: middle;    // Vertically align the logotype image
+                    width: 100%;    /* [1] */
                 }
 
 
@@ -180,7 +187,7 @@ $aligent-primary-navigation-breakpoint: huge !default;
                 @include media-query($aligent-primary-navigation-breakpoint) {
                     position: static;    /* [4] */
                 }
-                
+
             }
 
             /**
