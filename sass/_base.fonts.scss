@@ -5,12 +5,20 @@
 /**
  * Add extend-only classes for main fonts, so multiple properties can be
  * declared in the one place.
+ *
+ * 1. Use the fallback font family by default
+ *
+ * 2. Use the regular font once it has loaded (or is JavaScript is disabled).
+ *    This prevents a Flash of Invisible Text, and is the best we can do with
+ *    hosted fonts. See https://www.filamentgroup.com/lab/font-loading.html for
+ *    a more sophisticated technique for self-hosted fonts.
  */
 
 %#{$aligent-namespace}font-base {
     font-family:    $aligent-font-family-base-fallback;
 }
 
+.no-js %#{$aligent-namespace}font-base,
 .wf-active %#{$aligent-namespace}font-base {
     font-family: $aligent-font-family-base, $aligent-font-family-base-fallback;
 }
