@@ -7,6 +7,7 @@
     // Local variables
 
     $logotype-width: 172px;
+    $logotype-height: 136px;
 
 
     // Classes
@@ -16,10 +17,20 @@
     }
 
 
+        /**
+         * 1. Use fixed width so the image can be positioned centrally/ (This
+         *    would also allow a high resolution image to be used.)
+         *
+         * 2. Set a fixed height so the header height if fixed. This reduces the
+         *    redraw as the logo is loaded, and allows us to calculate the
+         *    position of the nav as soon as the script has loaded.
+         **/
+
         /*a*/.#{$aligent-namespace}site-header__home {
             display: block;
+            height: $logotype-height;    /* [2] */
             margin: 0 auto;
-            width: $logotype-width;
+            width: $logotype-width;    /* [1] */
         }
 
 }
