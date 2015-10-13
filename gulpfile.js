@@ -49,8 +49,8 @@ var argv = require('yargs').argv,   // Pass agruments using the command line
     // Set the destination path
 
     paths.dest = dest;
-    
-    
+
+
     // Set the manifest path for gulp-rev and gulp-fingerprint
 
     paths.manifest = dest + "rev-manifest.json";
@@ -227,12 +227,12 @@ gulp.task('clean', function () {
 // Copy and minify HTML
 
 gulp.task('html', function () {
-    
+
     // Load the manifest. (If we use gulp-fingerprint's loading mechanism the
     // results will be cached.
-    
+
     var manifest = jsonfile.readFileSync(paths.manifest, {throws: false})
-    
+
     if (!manifest && argv.production) {
         console.log("Error: a manifest must be present when running this task in production mode");
     } else {
@@ -249,6 +249,8 @@ gulp.task('html', function () {
 gulp.task('html:watch', function () {
     if (!argv.production) {
         gulp.watch(paths.src.html + '**/*.{html,mustache}', ['html']);
+    } else {
+        console.log('This task should not be run in production mode as it may cause problems with fingerprinting.')
     }
 });
 
@@ -271,6 +273,8 @@ gulp.task('imagemin', function () {
 gulp.task('imagemin:watch', function () {
     if (!argv.production) {
         gulp.watch(paths.src.images + '*', ['imagemin']);
+    } else {
+        console.log('This task should not be run in production mode as it may cause problems with fingerprinting.')
     }
 });
 
@@ -310,6 +314,8 @@ gulp.task('js-concat', function () {
 gulp.task('js-concat:watch', function () {
     if (!argv.production) {
         gulp.watch(paths.src.js + '**/*.js', ['js-concat']);
+    } else {
+        console.log('This task should not be run in production mode as it may cause problems with fingerprinting.')
     }
 });
 
@@ -320,12 +326,12 @@ gulp.task('js-concat:watch', function () {
 // Compile CSS from Sass/sass
 
 gulp.task('sass', function () {
-    
+
     // Load the manifest. (If we use gulp-fingerprint's loading mechanism the
     // results will be cached.
-    
+
     var manifest = jsonfile.readFileSync(paths.manifest, {throws: false})
-    
+
     if (!manifest && argv.production) {
         console.log("Error: a manifest must be present when running this task in production mode");
     } else {
@@ -350,6 +356,8 @@ gulp.task('sass', function () {
 gulp.task('sass:watch', function () {
     if (!argv.production) {
         gulp.watch(paths.src.sass + '**/*.scss', ['sass']);     // TODO consider changing to gulp-watch so new files are detected
+    } else {
+        console.log('This task should not be run in production mode as it may cause problems with fingerprinting.')
     }
 });
 
@@ -376,7 +384,7 @@ gulp.task('build', function(callback) {
 });
 
 
-// Run all watch tasks. (Note that this won't do anything in production mode 
+// Run all watch tasks. (Note that this won't do anything in production mode
 // as running these tasks out of sequence in production mode will cause errors)
 
 gulp.task('build:watch', ['html:watch', 'imagemin:watch', 'js-concat:watch', 'sass:watch']);
