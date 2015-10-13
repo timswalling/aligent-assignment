@@ -6,8 +6,10 @@ var argv = require('yargs').argv,   // Pass agruments using the command line
     browserSync = require('browser-sync').create(),     // Automatically refresh the browser
     concat = require('gulp-concat'),    // Combine simple JavaScript files
     del = require('del'),   // Delete unwanted files and folders (eg public before production build)
+    fingerprint = require('gulp-fingerprint'),  // Update asset paths to include fingerprint. Used in conjuction with gulp-rev
+    fingerprintOptions,
+    jsonfile = require('jsonfile'), // Read JSON data
     gulp = require('gulp'),
-    gulpif = require('gulp-if'),  // Conditionally apply transformations based on command line argument. Used in conjuction with yargs and multipipe
     htmlmin = require('gulp-html-minifier'),
     htmlminOptions,
     imagemin = require('gulp-imagemin'),    // Optimise images
@@ -18,9 +20,12 @@ var argv = require('yargs').argv,   // Pass agruments using the command line
     mustache = require('gulp-mustache-plus'),
     mustacheData,
     mustachePartials,
+    passthrough = require('gulp-empty'),    // Pass through an unaltered stream; useful for conditional processing
     paths,  // Frequently used file paths
-    pipe = require('multipipe'),    // Used in conjuction with gulp-if to perform multiple conditional transformations
+    rename = require('gulp-rename'), // Rename output files
     rev = require('gulp-rev'),      // Add a hash-based fingerprint to the output filename
+    revManifestOptions,
+    runSequence = require('run-sequence'),   // Run tasks in specific order. Not required in Gulp v4
     sass = require('gulp-sass'),    // Compile CSS from Sass/sass
     sassOptions,
     uglify = require('gulp-uglify');    // Mangle and compress JavaScript
@@ -32,7 +37,7 @@ var argv = require('yargs').argv,   // Pass agruments using the command line
 
     // Set the variables for the root folders
 
-    var dest = argv.production ? "./public/" : "./temp/",    // Use the public folder for a "production" build or the temp folder for all other builds
+    var dest = argv.production ? "public/" : "temp/",    // Use the public folder for a "production" build or the temp folder for all other builds
         src = "./";
 
 
@@ -41,20 +46,17 @@ var argv = require('yargs').argv,   // Pass agruments using the command line
     paths = {};
 
 
-    // Create the dest object
+    // Set the destination path
 
-    paths.dest = {};
+    paths.dest = dest;
+    
+    
+    // Set the manifest path for gulp-rev and gulp-fingerprint
 
-    paths.dest.root = dest;
-
-    paths.dest.images = dest + "images/";
-
-    paths.dest.js = dest + "js/";
-
-    paths.dest.css = dest + "css/"
+    paths.manifest = dest + "rev-manifest.json";
 
 
-    // Create the source object
+    // Set the source paths
 
     paths.src = {};
 
@@ -63,8 +65,6 @@ var argv = require('yargs').argv,   // Pass agruments using the command line
     paths.src.html = src + "html/";
 
     paths.src.images = src + "images/";
-
-    paths.src.includes = src + "includes/";
 
     paths.src.js = src + "js/";
 
@@ -87,6 +87,9 @@ autoprefixerOptions = {
         "Safari >= 6"
     ]
 };
+
+
+fingerprintOptions = {};
 
 
 htmlminOptions = {
@@ -143,6 +146,12 @@ mustachePartials = {
 };
 
 
+revManifestOptions = {
+    base: paths.dest,  // Necessary to allow merging;
+    merge: true
+};
+
+
 sassOptions = {
     includePaths: ['./node_modules']
 };
@@ -180,7 +189,6 @@ jsList = [
             paths.src.js + "ui-toggle.js",
             paths.src.js + "sticky-navigation.js"
         ],
-        destination: paths.dest.js,
         filename: "main.js"
     }
 ];
@@ -189,16 +197,27 @@ jsList = [
 
 
 
+// Redefine some optimisation processes so they're not used in development
+
+if (!argv.production) {
+    fingerprint = passthrough;
+    htmlmin = passthrough;
+    minifyCss = passthrough;
+    rev = passthrough;
+    rev.manifest = passthrough;
+    uglify = passthrough;
+}
+
+
+
+
+
 // Remove destination folder in production mode
 
 gulp.task('clean', function () {
-
     if (argv.production) {
-
-        del.sync([paths.dest.root]);
-
+        del.sync([paths.dest]);
     }
-
 });
 
 
@@ -208,14 +227,29 @@ gulp.task('clean', function () {
 // Copy and minify HTML
 
 gulp.task('html', function () {
-    gulp.src(paths.src.html + '**/*.html')
-        .pipe(mustache(mustacheData, {}, mustachePartials))
-        .pipe(gulpif(argv.production, htmlmin(htmlminOptions)))
-        .pipe(gulp.dest(paths.dest.root))
+    
+    // Load the manifest. (If we use gulp-fingerprint's loading mechanism the
+    // results will be cached.
+    
+    var manifest = jsonfile.readFileSync(paths.manifest, {throws: false})
+    
+    if (!manifest && argv.production) {
+        console.log("Error: a manifest must be present when running this task in production mode");
+    } else {
+        return gulp.src(paths.src.html + '**/*.html')
+            .pipe(mustache(mustacheData, {}, mustachePartials))
+            .pipe(fingerprint(manifest, fingerprintOptions))
+            .pipe(htmlmin(htmlminOptions))
+            .pipe(gulp.dest(paths.dest));
+    }
 });
 
+// Watch for changes to the HTML and/or mustache partials
+
 gulp.task('html:watch', function () {
-    gulp.watch(paths.src.html + '**/*.{html,mustache}', ['html']);   // TODO consider changing to gulp-watch so only changed files are processed
+    if (!argv.production) {
+        gulp.watch(paths.src.html + '**/*.{html,mustache}', ['html']);
+    }
 });
 
 
@@ -225,15 +259,19 @@ gulp.task('html:watch', function () {
 // Optimise images
 
 gulp.task('imagemin', function () {
-
-    return gulp.src(paths.src.images + '*')
+    return gulp.src(paths.src.images + '*', {base: paths.src.root})  // Use root as base to get paths in rev-manifest.json
         .pipe(imagemin(imageminOptions))
-        .pipe(gulp.dest(paths.dest.images))
-        .pipe(browserSync.stream());
+        .pipe(rev())    // Add cache-busting fingerprint
+        .pipe(gulp.dest(paths.dest))
+        .pipe(browserSync.stream())
+        .pipe(rev.manifest(paths.manifest, revManifestOptions))
+        .pipe(gulp.dest(paths.dest));
 });
 
 gulp.task('imagemin:watch', function () {
-    gulp.watch(paths.src.images + '*', ['imagemin']);   // TODO consider changing to gulp-watch so only changed files are processed
+    if (!argv.production) {
+        gulp.watch(paths.src.images + '*', ['imagemin']);
+    }
 });
 
 
@@ -252,18 +290,27 @@ gulp.task('js-concat', function () {
 
     jsList.forEach(function (bundle) {
 
-        return gulp.src(bundle.source)
+        return gulp.src(bundle.source, {base: paths.src.root})  // Use root as base to get paths in rev-manifest.json
             .pipe(concat(bundle.filename))
-            .pipe(gulpif(argv.production, pipe(uglify(), rev())))    // Uglify and fingerprint if in production mode
-            .pipe(gulp.dest(bundle.destination))
-            .pipe(browserSync.stream());
+            .pipe(rename(function (path) {
+                path.dirname = "js";    // Set the destination directory
+                return path;
+             }))
+            .pipe(rev())    // Add cache-busting fingerprint
+            .pipe(uglify())    // Uglify and fingerprint if in production mode
+            .pipe(gulp.dest(paths.dest))
+            .pipe(browserSync.stream())
+            .pipe(rev.manifest(paths.manifest, revManifestOptions))
+            .pipe(gulp.dest(paths.dest));
 
     });
 
 });
 
 gulp.task('js-concat:watch', function () {
-    gulp.watch(paths.src.js + '**/*.js', ['js-concat']);
+    if (!argv.production) {
+        gulp.watch(paths.src.js + '**/*.js', ['js-concat']);
+    }
 });
 
 
@@ -273,19 +320,37 @@ gulp.task('js-concat:watch', function () {
 // Compile CSS from Sass/sass
 
 gulp.task('sass', function () {
-
-    gulp.src(paths.src.sass + '**/*.scss')
-        .pipe(sass(sassOptions)
-            .on('error', sass.logError))
-        .pipe(autoprefixer(autoprefixerOptions))
-        .pipe(gulpif(argv.production, pipe(minifyCss(minifyCssOptions), rev())))  // Minify and fingerprint if in production mode
-        .pipe(gulp.dest(paths.dest.css))
-        .pipe(browserSync.stream());
-
+    
+    // Load the manifest. (If we use gulp-fingerprint's loading mechanism the
+    // results will be cached.
+    
+    var manifest = jsonfile.readFileSync(paths.manifest, {throws: false})
+    
+    if (!manifest && argv.production) {
+        console.log("Error: a manifest must be present when running this task in production mode");
+    } else {
+        return gulp.src(paths.src.sass + '**/*.scss', {base: paths.src.root})  // Use root as base to get paths in rev-manifest.json
+            .pipe(sass(sassOptions)
+                .on('error', sass.logError))
+            .pipe(fingerprint(manifest, fingerprintOptions))  // Update asset paths
+            .pipe(autoprefixer(autoprefixerOptions))
+            .pipe(rename(function (path) {
+                path.dirname = path.dirname.replace(/^sass/, "css");    // Replace the sass folder with css
+                return path;
+             }))
+            .pipe(rev())    // Add cache-busting fingerprint
+            .pipe(minifyCss(minifyCssOptions))  // Minify if in production mode
+            .pipe(gulp.dest(paths.dest))
+            .pipe(browserSync.stream())
+            .pipe(rev.manifest(paths.manifest, revManifestOptions))
+            .pipe(gulp.dest(paths.dest));
+    }
 });
 
 gulp.task('sass:watch', function () {
-    gulp.watch(paths.src.sass + '**/*.scss', ['sass']);     // TODO consider changing to gulp-watch so new files are detected
+    if (!argv.production) {
+        gulp.watch(paths.src.sass + '**/*.scss', ['sass']);     // TODO consider changing to gulp-watch so new files are detected
+    }
 });
 
 
@@ -297,23 +362,28 @@ gulp.task('sass:watch', function () {
 gulp.task('serve', function() {
 
     browserSync.init({
-        server: paths.dest.root
+        server: paths.dest
     });
 
-    gulp.watch(paths.dest.root + './*.html').on('change', browserSync.reload);
+    gulp.watch(paths.dest + './*.html').on('change', browserSync.reload);
 });
 
 
 // Run all build tasks (once)
 
-gulp.task('build', ['clean','html','imagemin','js-concat','sass']);
+gulp.task('build', function(callback) {
+    runSequence('clean', ['imagemin', 'js-concat'], 'sass', 'html', callback);
+});
 
 
-// Run all watch tasks
+// Run all watch tasks. (Note that this won't do anything in production mode 
+// as running these tasks out of sequence in production mode will cause errors)
 
-gulp.task('build:watch', ['html:watch','imagemin:watch','js-concat:watch','sass:watch']);
+gulp.task('build:watch', ['html:watch', 'imagemin:watch', 'js-concat:watch', 'sass:watch']);
 
 
 // Build, serve and watch
 
-gulp.task('default', ['build','serve','build:watch']);
+gulp.task('default', function(callback) {
+    runSequence('build', 'serve', 'build:watch', callback)
+});
