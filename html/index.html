@@ -35,6 +35,25 @@
 
         <!-- Avoid using unnecessary scripts in here; add them to the end of the body. If this can't be avoided, use inline or asynchronous scripts. -->
 
+        <!-- No JS -->
+
+        <script>
+
+            (function () {
+
+                "use strict";
+
+                var e = document.documentElement;
+
+                e.className = e.className.replace(/(?:^|\s)no-js(?!\S)/,"js");
+
+            }());
+
+        </script>
+
+        <!-- End no JS -->
+
+
         <!-- Font loader -->
 
         <script>
