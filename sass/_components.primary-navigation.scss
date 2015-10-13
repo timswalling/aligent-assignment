@@ -125,7 +125,8 @@ $aligent-primary-navigation-breakpoint: huge !default;
              *
              * 2. Stick to the left of the nav
              *
-             * 3. Add a drop-down marker when active
+             * 3. Add a drop-down marker when active (including when JavaScript
+             *    is disabled)
              **/
 
             /*button*/.#{$aligent-namespace}primary-navigation__toggle {
@@ -135,7 +136,7 @@ $aligent-primary-navigation-breakpoint: huge !default;
                 left: 0;             /* [2] */
                 top: 0;              /* [2] */
 
-                &.is-active {
+                &.is-active, .no-js & {
 
                     // Make sure the drop-down file is loaded, as it's required for this mixin
 
@@ -187,6 +188,9 @@ $aligent-primary-navigation-breakpoint: huge !default;
              *    positing can be used on descendents
              *
              * 4. Display when active
+             *
+             * 5. Display (using relative positioning) when JavaScript is
+             *    disabled
              **/
 
             /*ul*/.#{$aligent-namespace}primary-navigation__list--responsive {
@@ -194,6 +198,12 @@ $aligent-primary-navigation-breakpoint: huge !default;
 
                 &.is-active {
                     @extend %#{$aligent-namespace}u-display-block;    /* [4] */
+                }
+
+                .no-js & {
+                    @extend %#{$aligent-namespace}u-display-block;    /* [5] */
+
+                    position: relative;
                 }
 
                 @include media-query($aligent-primary-navigation-breakpoint) {
