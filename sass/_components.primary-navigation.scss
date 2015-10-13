@@ -165,6 +165,8 @@ $aligent-primary-navigation-breakpoint: huge !default;
              *
              * 3. Use absolute positioning on small devices (for drop-down and
              *    right-positioned elements)
+             *
+             * 4. Use static positioning on larger devices
              **/
 
             /*ul*/.#{$aligent-namespace}primary-navigation__list {
@@ -175,6 +177,10 @@ $aligent-primary-navigation-breakpoint: huge !default;
                     display: inline-block;    /* [2] */
                 }
 
+                @include media-query($aligent-primary-navigation-breakpoint) {
+                    position: static;    /* [4] */
+                }
+                
             }
 
             /**
