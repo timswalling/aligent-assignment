@@ -61,11 +61,15 @@ $aligent-drop-down-breakpoint: huge !default;
      * 2. Hide it by default
      *
      * 3. Display it on hover on larger devices
+     *
+     * 4. Add a bottom border that closely matches the box-shadow, so the edge
+     *    is visible on older browsers
      **/
 
     /*div*/.#{$aligent-namespace}drop-down__body,
     /*div*/%#{$aligent-namespace}drop-down__body {
         background-color: $aligent-drop-down-color-background;
+        border-bottom: 1px solid tint(black, 90%);    /* [4] */
         box-shadow: 0 4px 4px rgba(0,0,0,0.1);
         display: none;    /* [2] */
         left: 0;    /* [1] */
