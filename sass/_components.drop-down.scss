@@ -38,6 +38,42 @@ $aligent-drop-down-breakpoint: huge !default;
 
 
 /**
+ * Create a mixin for the main drop-down element, as this may be used elsewhere,
+ * and a mixin provides more stability than an extend.
+ *
+ * 1. Ensure the drop-down occupies the full width of the window
+ *
+ * 2. Hide it by default
+ *
+ * 3. Display it on hover on larger devices
+ *
+ * 4. Add a bottom border that closely matches the box-shadow, so the edge
+ *    is visible on older browsers
+ **/
+
+@mixin drop-down-body {
+    background-color: $aligent-drop-down-color-background;
+    border-bottom: 1px solid tint(black, 90%);    /* [4] */
+    box-shadow: 0 4px 4px rgba(0,0,0,0.1);
+    display: none;    /* [2] */
+    left: 0;    /* [1] */
+    position: absolute; /* [1] */
+    visibility: hidden;    /* [2] */
+    width: 100%;    /* [1] */
+
+    // Show the drop-down on hover, but only on larger screens
+
+    @include media-query($aligent-drop-down-breakpoint) {
+        .drop-down:hover > & {
+            display: block;    /* [3] */
+            visibility: visible;    /* [3] */
+        }
+    }
+
+}
+
+
+/**
  * A container element for the drop-down. This is used to trigger display of the
  * body, and to hold the marker
  **/
@@ -53,37 +89,11 @@ $aligent-drop-down-breakpoint: huge !default;
 
 }
 
-    /**
-     * The main drop-down element
-     *
-     * 1. Ensure the drop-down occupies the full width of the window
-     *
-     * 2. Hide it by default
-     *
-     * 3. Display it on hover on larger devices
-     *
-     * 4. Add a bottom border that closely matches the box-shadow, so the edge
-     *    is visible on older browsers
-     **/
 
-    /*div*/.#{$aligent-namespace}drop-down__body,
-    /*div*/%#{$aligent-namespace}drop-down__body {
-        background-color: $aligent-drop-down-color-background;
-        border-bottom: 1px solid tint(black, 90%);    /* [4] */
-        box-shadow: 0 4px 4px rgba(0,0,0,0.1);
-        display: none;    /* [2] */
-        left: 0;    /* [1] */
-        position: absolute; /* [1] */
-        visibility: hidden;    /* [2] */
-        width: 100%;    /* [1] */
+    // The main drop-down element
 
-        @include media-query($aligent-drop-down-breakpoint) {
-            .drop-down:hover > & {
-                display: block;    /* [3] */
-                visibility: visible;    /* [3] */
-            }
-        }
-
+    /*div*/.#{$aligent-namespace}drop-down__body {
+        @include drop-down-body;
     }
 
 

@@ -164,17 +164,11 @@ $aligent-primary-navigation-breakpoint: huge !default;
              *
              * 3. Use absolute positioning on small devices (for drop-down and
              *    right-positioned elements)
-             *
-             * 4. Use static positioning on larger devices so floats can be used
              **/
 
             /*ul*/.#{$aligent-namespace}primary-navigation__list {
                 @extend %#{$inuit-list-bare-namespace}list-bare;    /* [1] */
                 position: absolute;    /* [3] */
-
-                @include media-query($aligent-primary-navigation-breakpoint) {
-                    position: static;    /* [4] */
-                }
 
                 & > li {
                     display: inline-block;    /* [2] */
@@ -189,11 +183,14 @@ $aligent-primary-navigation-breakpoint: huge !default;
              *
              * 2. Display as a bare floating element on larger devices
              *
+             * 4. Use static positioning on larger devices so absolute
+             *    positing can be used on descendents
+             *
              * 4. Display when active
              **/
 
             /*ul*/.#{$aligent-namespace}primary-navigation__list--responsive {
-                @extend %#{$aligent-namespace}drop-down__body;    /* [1] */
+                @include drop-down-body;    /* [1] */
 
                 &.is-active {
                     @extend %#{$aligent-namespace}u-display-block;    /* [4] */
@@ -204,6 +201,7 @@ $aligent-primary-navigation-breakpoint: huge !default;
                     box-shadow: none;    /* [2] */
                     float: left;         /* [2] */
                     width: auto;         /* [2] */
+                    position: static;    /* [3] */
                 }
 
             }
